@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DriveEasy – Road Trip Planner</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-road logo-icon"></i> Drive
+                <span>Easy</span>
+            </div>
+
+            <div class="nav-links" id="navLinks">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#planner" class="nav-link">Planner</a>
+                <a href="#nearby" class="nav-link">Nearby</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle">
+        <i id="themeIcon" class="fas fa-moon"></i>
+      </button>
+                <button class="hamburger" id="hamburger">
+        <i class="fas fa-bars"></i>
+      </button>
+            </div>
+        </div>
+    </nav>
+    <section class="hero" id="home">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-compass"></i> Plan Smarter Road Trips
+            </div>
+
+            <h1 class="hero-title">DriveEasy</h1>
+            <p class="hero-subtitle">Your Intelligent Road Trip Companion</p>
+            <p class="hero-desc">
+                Plan routes, discover nearby places, estimate fuel costs, and check weather — all in one place.
+            </p>
+
+            <div class="hero-btns">
+                <a href="#planner" class="btn btn-primary">
+                    <i class="fas fa-route"></i> Start Planning
+                </a>
+                <a href="#nearby" class="btn btn-outline">
+                    <i class="fas fa-map-marker-alt"></i> Explore Nearby
+                </a>
+            </div>
+
+            <div class="hero-stats">
+                <div class="stat">
+                    <span>100+</span>
+                    <p>Destinations</p>
+                </div>
+                <div class="stat">
+                    <span>Free</span>
+                    <p>Weather API</p>
+                </div>
+                <div class="stat">
+                    <span>Smart</span>
+                    <p>Fuel Estimator</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-scroll-hint">
+            <i class="fas fa-angle-down"></i>
+        </div>
+    </section>
+
+
+    <section class="section" id="planner">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Trip Planner</div>
+                <h2>Plan Your Route</h2>
+                <p>Get directions, distance, time & weather instantly.</p>
+            </div>
+
+            <div class="planner-grid">
+
+
+                <div class="planner-panel">
+
+
+                    <div class="input-group">
+                        <label><i class="fas fa-location-dot"></i> Start Location</label>
+                        <div class="input-wrap">
+                            <input type="text" id="startLocation" placeholder="Enter starting point" />
+                            <button class="locate-btn" id="locateMe">
+              <i class="fas fa-crosshairs"></i>
+            </button>
+                        </div>
+                    </div>
+
+
+                    <div class="input-group">
+                        <label><i class="fas fa-flag-checkered"></i> Destination</label>
+                        <input type="text" id="endLocation" placeholder="Enter destination" />
+                    </div>
+
+                    <button class="btn btn-primary full-width" id="planRoute">
+          <i class="fas fa-route"></i> Plan Route
+        </button>
+
+                    <!-- Map Type Switcher -->
+                    <div class="map-type-switcher">
+                        <span class="switcher-label">Map Type</span>
+                        <div class="map-type-btns">
+                            <button class="map-type-btn active" data-type="roadmap">Roadmap</button>
+                            <button class="map-type-btn" data-type="satellite">Satellite</button>
+                            <button class="map-type-btn" data-type="terrain">Terrain</button>
+                        </div>
+                    </div>
+
+                    <!-- Route Info -->
+                    <div class="route-info" id="routeInfo" style="display:none">
+                        <div class="route-info-item">
+                            <i class="fas fa-road"></i>
+                            <div>
+                                <span class="info-label">Distance</span>
+                                <span class="info-value" id="routeDistance">--</span>
+                            </div>
+                        </div>
+                        <div class="route-info-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <span class="info-label">Duration</span>
+                                <span class="info-value" id="routeDuration">--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fuel Calculator -->
+                    <div class="fuel-calc" id="fuelCalc" style="display:none">
+                        <div class="fuel-inputs">
+                            <input type="number" id="fuelEfficiency" placeholder="Mileage (km/L)" />
+                            <input type="number" id="fuelPrice" placeholder="Fuel Price (₹/L)" />
+                        </div>
+                        <button class="btn btn-outline small" id="calcFuel">
+            Calculate Fuel Cost
+          </button>
+                        <div id="fuelCost" style="font-weight:700"></div>
+                    </div>
+
+                    <!-- Weather -->
+                    <div class="weather-card" id="weatherCard" style="display:none">
+                        <div class="weather-header">
+                            <i class="fas fa-cloud-sun"></i> Destination Weather
+                        </div>
+                        <div class="weather-info" id="weatherInfo"></div>
+                    </div>
+
+                    <!-- Save Trips -->
+                    <div class="saved-trips" id="saveTripSection" style="display:none">
+                        <button class="btn btn-outline small" id="saveTrip">
+            <i class="fas fa-bookmark"></i> Save Trip
+          </button>
+                        <div id="savedTripsList"></div>
+                    </div>
+
+                </div>
+
+                <!-- Map -->
+                <div class="map-wrapper">
+                    <div id="map"></div>
+                    <div class="map-loading" id="mapLoading">
+                        <div class="spinner"></div>
+                        <p>Loading Google Maps...</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- NEARBY SECTION -->
+    <!-- ========================================= -->
+    <section class="section alt-section" id="nearby">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Explore</div>
+                <h2>Nearby Places</h2>
+                <p>Find hotels, fuel stations, restaurants & more.</p>
+            </div>
+
+            <div class="category-tabs">
+                <button class="cat-btn active" data-type="lodging"><i class="fas fa-hotel"></i> Hotels</button>
+                <button class="cat-btn" data-type="restaurant"><i class="fas fa-utensils"></i> Restaurants</button>
+                <button class="cat-btn" data-type="gas_station"><i class="fas fa-gas-pump"></i> Fuel</button>
+                <button class="cat-btn" data-type="car_repair"><i class="fas fa-wrench"></i> Car Service</button>
+            </div>
+
+            <div class="nearby-layout">
+                <div class="nearby-map-wrap">
+                    <div id="nearbyMap"></div>
+                </div>
+                <div class="places-list" id="placesList">
+                    <div class="places-placeholder">
+                        <i class="fas fa-search"></i>
+                        <p>Select a category to find nearby places.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- CONTACT SECTION -->
+    <!-- ========================================= -->
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Contact</div>
+                <h2>Get in Touch</h2>
+                <p>Have feedback or suggestions? We'd love to hear from you.</p>
+            </div>
+
+            <div class="contact-grid">
+                <div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <strong>Email</strong>
+                            <p>support@driveeasy.com</p>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="contact-form" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea rows="5" required></textarea>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">
+          <i class="fas fa-paper-plane"></i> Send Message
+        </button>
+
+                    <div class="form-success" id="formSuccess" style="display:none">
+                        <i class="fas fa-check-circle"></i> Message sent successfully!
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- FOOTER -->
+    <!-- ========================================= -->
+    <footer class="footer">
+        <div class="container footer-bottom">
+            © 2026 DriveEasy — Made with <i class="fas fa-heart"></i> for road explorers.
+        </div>
+    </footer>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ========================================= -->
+    <!-- SCRIPTS -->
+    <!-- ========================================= -->
+
+    <script src="react.js"></script>
+
+    <!-- 🔑 REPLACE YOUR_API_KEY BELOW -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places,geometry&callback=initMaps" async defer></script>
+
+</body>
+
+</html>
